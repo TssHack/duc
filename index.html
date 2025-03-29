@@ -85,13 +85,15 @@
 
         <h2>Example Requests</h2>
         <h3>Using Browser (GET)</h3>
-        <div class="code-block">
-        https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY
+        <div class="code-block" id="get-example">
+            https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY
+            <button class="copy-btn" onclick="copyToClipboard('get-example')">Copy</button>
         </div>
 
         <h3>Using cURL (POST)</h3>
         <div class="code-block">
         curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY", "stream": true}'
+            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
         </div>
 
         <h3>Using Python (requests)</h3>
@@ -99,6 +101,7 @@
         import requests
         response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
         print(response.json())
+            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
         </div>
 
         <h3>Using PHP</h3>
@@ -115,6 +118,7 @@
         $result = file_get_contents($url, false, $context);
         echo $result;
         ?>
+            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
         </div>
 
         <h2>Error Codes</h2>
