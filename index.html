@@ -15,6 +15,19 @@
         .footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #777; }
         .highlight { color: #4A90E2; font-weight: bold; }
     </style>
+    <script>
+        function copyToClipboard(id, btn) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerText = "Copied!";
+                btn.classList.add("copied");
+                setTimeout(() => {
+                    btn.innerText = "Copy";
+                    btn.classList.remove("copied");
+                }, 2000);
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -87,25 +100,28 @@
         <h3>Using Browser (GET)</h3>
         <div class="code-block" id="get-example">
             https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY
-            <button class="copy-btn" onclick="copyToClipboard('get-example')">Copy</button>
+            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
         <h3>Using cURL (POST)</h3>
-        <div class="code-block">
+        <div class="code-block" id="curl-example">
         curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY", "stream": true}'
-            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
+            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
         <h3>Using Python (requests)</h3>
-        <div class="code-block">
-        import requests
-        response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
-        print(response.json())
-            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
+        <div class="code-block" id="python-example">
+        ```python 
+import requests
+response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", 
+    json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
+print(response.json())
+```
+            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
         <h3>Using PHP</h3>
-        <div class="code-block">
+        <div class="code-block" id="php-example">
         <?php
         $url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
         $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY", "stream" => true]);
@@ -118,7 +134,7 @@
         $result = file_get_contents($url, false, $context);
         echo $result;
         ?>
-            <button class="copy-btn" onclick="copyToClipboard('curl-example')">Copy</button>
+            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
         <h2>Error Codes</h2>
