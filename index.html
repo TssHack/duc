@@ -111,18 +111,16 @@
 
         <h3>Using Python (requests)</h3>
         <div class="code-block" id="python-example">
-        ```python 
-import requests
+        import requests
 response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", 
     json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
 print(response.json())
-```
+
             <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
         <h3>Using PHP</h3>
         <div class="code-block" id="php-example">
-        <?php
         $url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
         $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY", "stream" => true]);
         $options = ["http" => [
@@ -133,7 +131,6 @@ print(response.json())
         $context = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
         echo $result;
-        ?>
             <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
         </div>
 
