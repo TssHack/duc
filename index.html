@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT API Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7fc; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 20px; background: #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-radius: 12px; }
+        h1, h2 { text-align: center; color: #4A90E2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4A90E2; color: #fff; }
+        .code-block { background-color: #eef1f7; padding: 15px; border-radius: 8px; font-family: monospace; }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #777; }
+        .highlight { color: #4A90E2; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GPT API Documentation</h1>
+        <p>Welcome to the <span class="highlight">GPT API</span> documentation. This API allows developers to generate text responses using custom queries.</p>
+
+        <h2>API Endpoints</h2>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/ehsan/g</td>
+                <td>Fetch text response using query parameters</td>
+            </tr>
+            <tr>
+                <td>POST</td>
+                <td>/ehsan/g</td>
+                <td>Fetch text response using JSON body</td>
+            </tr>
+        </table>
+
+        <h2>Parameters</h2>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>q</td>
+                <td>String</td>
+                <td>Yes</td>
+                <td>The query text for the GPT API</td>
+            </tr>
+            <tr>
+                <td>userId</td>
+                <td>String</td>
+                <td>Yes</td>
+                <td>Unique user identifier</td>
+            </tr>
+            <tr>
+                <td>network</td>
+                <td>Boolean</td>
+                <td>No</td>
+                <td>Enable or disable network requests</td>
+            </tr>
+        </table>
+
+        <h2>Example Requests</h2>
+        <h3>Using cURL</h3>
+        <div class="code-block">
+        curl -X POST "https://api.example.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345"}'
+        </div>
+
+        <h3>Using Python (requests)</h3>
+        <div class="code-block">
+        import requests
+        response = requests.post("https://api.example.com/ehsan/g", json={"q": "Hello", "userId": "12345"})
+        print(response.json())
+        </div>
+
+        <h3>Using PHP</h3>
+        <div class="code-block">
+        <?php
+        $url = "https://api.example.com/ehsan/g";
+        $data = json_encode(["q" => "Hello", "userId" => "12345"]);
+        $options = ["http" => [
+            "header" => "Content-Type: application/json",
+            "method" => "POST",
+            "content" => $data
+        ]];
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        echo $result;
+        ?>
+        </div>
+
+        <h3>Using Node.js (axios)</h3>
+        <div class="code-block">
+        const axios = require('axios');
+        axios.post("https://api.example.com/ehsan/g", { q: "Hello", userId: "12345" })
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
+        </div>
+
+        <h2>Error Codes</h2>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>400</td>
+                <td>Invalid request or missing parameters</td>
+            </tr>
+            <tr>
+                <td>403</td>
+                <td>Unauthorized request</td>
+            </tr>
+            <tr>
+                <td>429</td>
+                <td>Too many requests - rate limit exceeded</td>
+            </tr>
+            <tr>
+                <td>500</td>
+                <td>Internal server error</td>
+            </tr>
+        </table>
+
+        <div class="footer">&copy; 2025 Ehsan Fazli | GPT API Documentation</div>
+    </div>
+</body>
+</html>
