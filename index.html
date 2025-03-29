@@ -66,6 +66,12 @@
                 <td>No</td>
                 <td>Enable or disable network requests</td>
             </tr>
+            <tr>
+                <td>license</td>
+                <td>String</td>
+                <td>Yes</td>
+                <td>Your purchased license key (Contact developer for details)</td>
+            </tr>
         </table>
 
         <h2>License Information</h2>
@@ -74,21 +80,21 @@
         <h2>Example Requests</h2>
         <h3>Using cURL</h3>
         <div class="code-block">
-        curl -X POST "https://api.example.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345"}'
+        curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY"}'
         </div>
 
         <h3>Using Python (requests)</h3>
         <div class="code-block">
         import requests
-        response = requests.post("https://api.example.com/ehsan/g", json={"q": "Hello", "userId": "12345"})
+        response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY"})
         print(response.json())
         </div>
 
         <h3>Using PHP</h3>
         <div class="code-block">
         <?php
-        $url = "https://api.example.com/ehsan/g";
-        $data = json_encode(["q" => "Hello", "userId" => "12345"]);
+        $url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
+        $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY"]);
         $options = ["http" => [
             "header" => "Content-Type: application/json",
             "method" => "POST",
@@ -103,7 +109,7 @@
         <h3>Using Node.js (axios)</h3>
         <div class="code-block">
         const axios = require('axios');
-        axios.post("https://api.example.com/ehsan/g", { q: "Hello", userId: "12345" })
+        axios.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", { q: "Hello", userId: "12345", license: "YOUR_LICENSE_KEY" })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
         </div>
@@ -120,7 +126,7 @@
             </tr>
             <tr>
                 <td>403</td>
-                <td>Unauthorized request</td>
+                <td>Unauthorized request - License invalid or missing</td>
             </tr>
             <tr>
                 <td>429</td>
