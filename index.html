@@ -72,21 +72,32 @@
                 <td>Yes</td>
                 <td>Your purchased license key (Contact developer for details)</td>
             </tr>
+            <tr>
+                <td>stream</td>
+                <td>Boolean</td>
+                <td>No</td>
+                <td>Enable or disable response streaming</td>
+            </tr>
         </table>
 
         <h2>License Information</h2>
         <p>For licensing details and purchasing information, please contact <span class="highlight">@abj0o</span> on Telegram to obtain your license key.</p>
 
         <h2>Example Requests</h2>
-        <h3>Using cURL</h3>
+        <h3>Using cURL (GET)</h3>
         <div class="code-block">
-        curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY"}'
+        curl -X GET "https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY"
+        </div>
+
+        <h3>Using cURL (POST)</h3>
+        <div class="code-block">
+        curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY", "stream": true}'
         </div>
 
         <h3>Using Python (requests)</h3>
         <div class="code-block">
         import requests
-        response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY"})
+        response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
         print(response.json())
         </div>
 
@@ -94,7 +105,7 @@
         <div class="code-block">
         <?php
         $url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
-        $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY"]);
+        $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY", "stream" => true]);
         $options = ["http" => [
             "header" => "Content-Type: application/json",
             "method" => "POST",
@@ -104,14 +115,6 @@
         $result = file_get_contents($url, false, $context);
         echo $result;
         ?>
-        </div>
-
-        <h3>Using Node.js (axios)</h3>
-        <div class="code-block">
-        const axios = require('axios');
-        axios.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", { q: "Hello", userId: "12345", license: "YOUR_LICENSE_KEY" })
-        .then(response => console.log(response.data))
-        .catch(error => console.error(error));
         </div>
 
         <h2>Error Codes</h2>
