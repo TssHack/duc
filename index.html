@@ -3,31 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPT API Documentation</title>
+    <title>GPT API Documentation - Enhanced</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 0; }
-        .container { max-width: 1000px; margin: 40px auto; padding: 20px; background: #1e1e1e; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border-radius: 12px; }
-        h1, h2 { text-align: center; color: #4A90E2; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #2b2b2b; }
-        th, td { padding: 12px; border: 1px solid #444; text-align: left; }
-        th { background-color: #4A90E2; color: #fff; }
-        .code-block { background-color: #252525; padding: 15px; border-radius: 8px; font-family: monospace; color: #8be9fd; }
-        .footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #777; }
-        .highlight { color: #4A90E2; font-weight: bold; }
-    </style>
-    <script>
-        function copyToClipboard(id, btn) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                btn.innerText = "Copied!";
-                btn.classList.add("copied");
-                setTimeout(() => {
-                    btn.innerText = "Copy";
-                    btn.classList.remove("copied");
-                }, 2000);
-            });
+        :root {
+            --bg-color: #1a1a2e; /* Dark Navy Blue */
+            --container-bg: #16213e; /* Slightly Lighter Navy */
+            --text-color: #e0e0e0; /* Light Grey Text */
+            --primary-color: #0f3460; /* Darker Blue Accent */
+            --accent-color: #5372f0; /* Vibrant Blue Accent */
+            --header-color: #e94560; /* Pink/Red Header */
+            --border-color: #4a4e69; /* Muted Purple/Grey Border */
+            --code-bg: #2a2a40; /* Dark Purple/Blue Code Background */
+            --table-header-bg: var(--primary-color);
+            --link-color: var(--accent-color);
+            --button-bg: var(--accent-color);
+            --button-text-color: #ffffff;
+            --button-hover-bg: #405de6; /* Slightly darker blue */
+            --button-active-bg: #304ac6; /* Even darker blue */
+            --button-copied-bg: #27ae60; /* Green for success */
+            --button-copied-text-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --font-primary: 'Poppins', sans-serif;
+            --font-code: 'Courier New', Courier, monospace;
         }
-    </script>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px; /* Base font size */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 40px 35px;
+            background: var(--container-bg);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        h1 {
+            color: var(--header-color);
+            font-size: 2.6em;
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.9em;
+            margin-top: 45px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--button-hover-bg);
+            text-decoration: underline;
+        }
+
+        .table-wrapper {
+             overflow-x: auto; /* Enable horizontal scrolling on small screens */
+             margin-top: 25px;
+             border-radius: 8px;
+             border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--code-bg);
+            border-radius: 8px; /* Apply radius to table itself if not wrapped */
+            min-width: 600px; /* Prevent table from becoming too narrow */
+        }
+
+        th, td {
+            padding: 16px 20px;
+            border: 1px solid var(--border-color);
+            text-align: left; /* Default alignment for English */
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03); /* Subtle row striping */
+        }
+
+        .code-block {
+            position: relative; /* For positioning the button */
+            background-color: var(--code-bg);
+            padding: 25px 20px 20px 20px; /* More padding top */
+            border-radius: 8px;
+            margin-top: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3); /* Inner shadow */
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            overflow-x: auto; /* Scroll long code lines within pre */
+            white-space: pre; /* Preserve whitespace and allow scroll */
+        }
+
+        .code-block code {
+            display: block; /* Make code block-level */
+            font-family: var(--font-code);
+            color: #9efeff; /* Brighter cyan for code */
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px; /* Positioned to the right */
+            background: var(--button-bg);
+            color: var(--button-text-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--font-primary);
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .copy-btn:hover {
+            background-color: var(--button-hover-bg);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px); /* Slight lift */
+        }
+         .copy-btn:active {
+            background-color: var(--button-active-bg);
+            transform: translateY(0px); /* Press down */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+         }
+
+        .copy-btn.copied {
+            background-color: var(--button-copied-bg);
+            color: var(--button-copied-text-color);
+            pointer-events: none; /* Disable button briefly after copy */
+        }
+         /* Style for the checkmark icon */
+         .copy-btn.copied::before {
+            content: '✓ '; /* Add checkmark and space */
+            display: inline-block;
+            font-weight: bold;
+            margin-right: 4px;
+         }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.9em;
+            color: #888;
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 30px 15px;
+                padding: 30px 25px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            body {
+                font-size: 15px;
+            }
+
+            th, td {
+                padding: 14px 12px;
+            }
+             /* Table wrapper already handles scrolling */
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.9em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+             body {
+                font-size: 14px;
+            }
+
+            .container {
+                 margin: 20px 10px;
+                 padding: 25px 15px;
+            }
+
+             .code-block {
+                 padding: 20px 15px 15px 15px;
+             }
+
+            .copy-btn {
+                padding: 7px 12px;
+                font-size: 0.85em;
+                top: 8px;
+                right: 8px;
+            }
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
@@ -35,134 +268,308 @@
         <p>Welcome to the <span class="highlight">GPT API</span> documentation. This API allows developers to generate text responses using custom queries.</p>
 
         <h2>API Endpoints</h2>
-        <table>
-            <tr>
-                <th>Method</th>
-                <th>Endpoint</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>GET</td>
-                <td>/ehsan/g</td>
-                <td>Fetch text response using query parameters</td>
-            </tr>
-            <tr>
-                <td>POST</td>
-                <td>/ehsan/g</td>
-                <td>Fetch text response using JSON body</td>
-            </tr>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td>/ehsan/g</td>
+                        <td>Fetch text response using query parameters</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/ehsan/g</td>
+                        <td>Fetch text response using JSON body</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h2>Parameters</h2>
-        <table>
-            <tr>
-                <th>Parameter</th>
-                <th>Type</th>
-                <th>Required</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>q</td>
-                <td>String</td>
-                <td>Yes</td>
-                <td>The query text for the GPT API</td>
-            </tr>
-            <tr>
-                <td>userId</td>
-                <td>String</td>
-                <td>Yes</td>
-                <td>Unique user identifier</td>
-            </tr>
-            <tr>
-                <td>network</td>
-                <td>Boolean</td>
-                <td>No</td>
-                <td>Enable or disable network requests</td>
-            </tr>
-            <tr>
-                <td>license</td>
-                <td>String</td>
-                <td>Yes</td>
-                <td>Your purchased license key (Contact developer for details)</td>
-            </tr>
-            <tr>
-                <td>stream</td>
-                <td>Boolean</td>
-                <td>No</td>
-                <td>Enable or disable response streaming</td>
-            </tr>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                 <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <tr>
+                        <td>q</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>The query text for the GPT API</td>
+                    </tr>
+                    <tr>
+                        <td>userId</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>Unique user identifier</td>
+                    </tr>
+                    <tr>
+                        <td>network</td>
+                        <td>Boolean</td>
+                        <td>No</td>
+                        <td>Enable or disable network requests (if applicable)</td>
+                    </tr>
+                    <tr>
+                        <td>license</td>
+                        <td>String</td>
+                        <td>Yes</td>
+                        <td>Your purchased license key (Contact developer for details)</td>
+                    </tr>
+                    <tr>
+                        <td>stream</td>
+                        <td>Boolean</td>
+                        <td>No</td>
+                        <td>Enable or disable response streaming</td>
+                    </tr>
+                 </tbody>
+            </table>
+        </div>
 
         <h2>License Information</h2>
         <p>For licensing details and purchasing information, please contact <span class="highlight">@abj0o</span> on Telegram to obtain your license key.</p>
 
         <h2>Example Requests</h2>
+
         <h3>Using Browser (GET)</h3>
-        <div class="code-block" id="get-example">
-            https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY
-            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard(this)" aria-label="Copy code">Copy</button>
+            <pre><code id="get-example">https://api-ehsan-gpt4.onrender.com/ehsan/g?q=hi&userId=12345&network=true&withoutContext=false&stream=true&license=YOUR_LICENSE_KEY</code></pre>
         </div>
 
         <h3>Using cURL (POST)</h3>
-        <div class="code-block" id="curl-example">
-        curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" -H "Content-Type: application/json" -d '{"q":"Hello","userId":"12345", "license":"YOUR_LICENSE_KEY", "stream": true}'
-            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard(this)" aria-label="Copy code">Copy</button>
+            <pre><code id="curl-example">curl -X POST "https://api-ehsan-gpt4.onrender.com/ehsan/g" \
+-H "Content-Type: application/json" \
+-d '{
+  "q": "Hello",
+  "userId": "12345",
+  "license": "YOUR_LICENSE_KEY",
+  "stream": true
+}'</code></pre>
         </div>
 
         <h3>Using Python (requests)</h3>
-        <div class="code-block" id="python-example">
-        import requests
-response = requests.post("https://api-ehsan-gpt4.onrender.com/ehsan/g", 
-    json={"q": "Hello", "userId": "12345", "license":"YOUR_LICENSE_KEY", "stream": True})
-print(response.json())
+        <div class="code-block">
+             <button class="copy-btn" onclick="copyToClipboard(this)" aria-label="Copy code">Copy</button>
+             <pre><code id="python-example">import requests
+import json
 
-            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
+api_url = "https://api-ehsan-gpt4.onrender.com/ehsan/g"
+payload = {
+    "q": "Hello",
+    "userId": "12345",
+    "license": "YOUR_LICENSE_KEY",
+    "stream": True # Set to False if not streaming
+}
+
+headers = {
+    "Content-Type": "application/json"
+}
+
+try:
+    response = requests.post(api_url, headers=headers, json=payload)
+    response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
+
+    # Process the response
+    if payload.get("stream"):
+        # Handle streaming response (example: print chunks)
+        for chunk in response.iter_content(chunk_size=8192):
+             if chunk:
+                 print(chunk.decode('utf-8'), end='')
+        print() # Newline after stream ends
+    else:
+        # Handle non-streaming response
+        print(json.dumps(response.json(), indent=2))
+
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+except json.JSONDecodeError:
+    print("Error decoding JSON response")
+    print("Raw response:", response.text)
+</code></pre>
         </div>
 
         <h3>Using PHP</h3>
-        <div class="code-block" id="php-example">
-        $url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
-        $data = json_encode(["q" => "Hello", "userId" => "12345", "license" => "YOUR_LICENSE_KEY", "stream" => true]);
-        $options = ["http" => [
-            "header" => "Content-Type: application/json",
-            "method" => "POST",
-            "content" => $data
-        ]];
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        echo $result;
-            <button class="copy-btn" onclick="copyToClipboard('get-example', this)">Copy</button>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyToClipboard(this)" aria-label="Copy code">Copy</button>
+            <pre><code id="php-example">&lt;?php
+$url = "https://api-ehsan-gpt4.onrender.com/ehsan/g";
+$data = [
+    "q" => "Hello",
+    "userId" => "12345",
+    "license" => "YOUR_LICENSE_KEY",
+    "stream" => true // Set to false if not streaming
+];
+
+$options = [
+    "http" => [
+        "header" => "Content-Type: application/json\r\n" .
+                    "Accept: application/json\r\n", // Specify accepted response type
+        "method" => "POST",
+        "content" => json_encode($data),
+        "ignore_errors" => true // Get response body even on errors
+    ]
+];
+
+$context = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+
+// Get HTTP status code from $http_response_header (automatically populated)
+$statusCode = -1;
+if (isset($http_response_header[0])) {
+    preg_match('{HTTP/\d\.\d\s+(\d+)\s+}', $http_response_header[0], $matches);
+    if (isset($matches[1])) {
+        $statusCode = (int)$matches[1];
+    }
+}
+
+if ($result === false) {
+    echo "Error fetching data. Status code: " . $statusCode;
+    // Handle connection errors or timeouts
+} elseif ($statusCode >= 400) {
+     echo "API Error - Status Code: " . $statusCode . "\n";
+     echo "Response Body:\n" . $result;
+     // Handle specific error codes (400, 403, 429, 500)
+} else {
+     // Success (assuming JSON response for non-stream, handle stream differently)
+     if ($data['stream']) {
+         // PHP's file_get_contents isn't ideal for streaming.
+         // You'd typically use cURL or a dedicated HTTP client library (like Guzzle)
+         // to handle streaming responses properly chunk by chunk.
+         echo "Streaming response received (raw):\n";
+         echo $result; // This will contain the full streamed response if stream=true
+     } else {
+         $decoded_result = json_decode($result, true);
+         if (json_last_error() === JSON_ERROR_NONE) {
+             echo json_encode($decoded_result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+         } else {
+             echo "Error decoding JSON response.\n";
+             echo "Raw response:\n" . $result;
+         }
+     }
+}
+?&gt;
+</code></pre>
         </div>
 
         <h2>Error Codes</h2>
-        <table>
-            <tr>
-                <th>Code</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>400</td>
-                <td>Invalid request or missing parameters</td>
-            </tr>
-            <tr>
-                <td>403</td>
-                <td>Unauthorized request - License invalid or missing</td>
-            </tr>
-            <tr>
-                <td>429</td>
-                <td>Too many requests - rate limit exceeded</td>
-            </tr>
-            <tr>
-                <td>500</td>
-                <td>Internal server error</td>
-            </tr>
-        </table>
+         <div class="table-wrapper">
+            <table>
+                 <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <tr>
+                        <td>400</td>
+                        <td>Bad Request - Invalid request format or missing required parameters.</td>
+                    </tr>
+                    <tr>
+                        <td>403</td>
+                        <td>Forbidden - Unauthorized request. Check your license key or access rights.</td>
+                    </tr>
+                    <tr>
+                        <td>429</td>
+                        <td>Too Many Requests - Rate limit exceeded. Please wait before sending more requests.</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>Internal Server Error - An issue occurred on the server side. Please try again later or contact support.</td>
+                    </tr>
+                    </tbody>
+            </table>
+         </div>
 
         <h2>Developer Information</h2>
-        <p>Developed by <span class="highlight">Ehsan Fazli</span> | Telegram ID: <span class="highlight">@abj0o</span></p>
+        <p>Developed by <span class="highlight">Ehsan Fazli</span> | Telegram ID: <a href="https://t.me/abj0o" target="_blank" rel="noopener noreferrer" class="highlight">@abj0o</a></p>
         <p>API Version: GPT-4</p>
 
         <div class="footer">&copy; 2025 Ehsan Fazli | GPT API Documentation</div>
     </div>
+
+    <script>
+        function copyToClipboard(btn) {
+            const codeBlock = btn.closest('.code-block'); // Find the parent code block
+            if (!codeBlock) {
+                 console.error("Could not find parent '.code-block'");
+                 return;
+            }
+
+            const codeElement = codeBlock.querySelector('code'); // Find the <code> element within the block
+            if (!codeElement) {
+                 console.error("Could not find '<code>' element within the block");
+                 return;
+            }
+
+            const textToCopy = codeElement.textContent || ""; // Get the text content
+
+            if (!navigator.clipboard) {
+                // Fallback for older browsers (less common now)
+                try {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = textToCopy;
+                    textArea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge.
+                    textArea.style.opacity = "0";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    // Visual feedback for success
+                    updateButtonState(btn, true);
+                 } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                    updateButtonState(btn, false, 'Copy Failed');
+                 }
+                 return;
+             }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Success feedback
+                updateButtonState(btn, true);
+            }).catch(err => {
+                console.error('Async: Could not copy text: ', err);
+                 // Error feedback
+                updateButtonState(btn, false, 'Copy Failed');
+            });
+        }
+
+        function updateButtonState(btn, success, message = 'Copied!') {
+             const originalText = 'Copy'; // Store the original text
+             if (success) {
+                 btn.textContent = message; // Change text (checkmark is added via CSS)
+                 btn.classList.add('copied');
+                 // Temporarily disable the button to prevent rapid clicking
+                 btn.disabled = true;
+             } else {
+                btn.textContent = message; // Show error message
+                // Optionally add an error class for styling
+                btn.classList.add('copy-error'); // You might want to define this class
+             }
+
+
+             setTimeout(() => {
+                 btn.textContent = originalText; // Restore original text
+                 btn.classList.remove('copied', 'copy-error'); // Remove feedback classes
+                 btn.disabled = false; // Re-enable button
+             }, 2000); // Revert after 2 seconds
+        }
+    </script>
 </body>
 </html>
